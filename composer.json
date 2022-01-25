@@ -1,0 +1,50 @@
+{
+	"authors": [
+		{
+			"email": "dn@phantasie-schmiede.de",
+			"name": "Daniel Ablass",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"PSB\\PsbFrontendUsers\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"PSB\\PsbFrontendUsers\\Tests\\": "Tests/"
+		}
+	},
+	"config": {
+		"bin-dir": ".Build/bin",
+		"sort-packages": true,
+		"vendor-dir": ".Build/vendor"
+	},
+	"description": "a versatile set of tools and objects for dealing with frontend-users",
+	"extra": {
+		"typo3/cms": {
+			"app-dir": ".Build",
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"extension-key": "psb_frontent_users",
+			"web-dir": ".Build/public"
+		}
+	},
+	"keywords": [
+		"configuration",
+		"development",
+		"extension",
+		"typo3"
+	],
+	"license": "GPL-2.0-or-later",
+	"name": "psb/psb-frontent-users",
+	"require": {
+		"php": "^7.4",
+		"psb/psb-foundation": "^1.0"
+	},
+	"require-dev": {
+		"roave/security-advisories": "dev-latest",
+		"typo3/testing-framework": "^6.8"
+	},
+	"type": "typo3-cms-extension"
+}
