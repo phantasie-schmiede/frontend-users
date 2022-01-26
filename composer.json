@@ -26,7 +26,7 @@
 		"typo3/cms": {
 			"app-dir": ".Build",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"extension-key": "psb_frontent_users",
+			"extension-key": "psb_frontend_users",
 			"web-dir": ".Build/public"
 		}
 	},
@@ -37,7 +37,7 @@
 		"typo3"
 	],
 	"license": "GPL-2.0-or-later",
-	"name": "psb/psb-frontent-users",
+	"name": "psb/psb-frontend-users",
 	"require": {
 		"php": "^7.4",
 		"psb/psb-foundation": "^1.0"
