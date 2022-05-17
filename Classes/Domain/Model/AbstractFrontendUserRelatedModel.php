@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace PSB\PsbFrontendUsers\Domain\Model;
 
-use PSB\PsbFoundation\Annotation\TCA\Select;
+use PSB\PsbFoundation\Annotation\TCA\Column\Select;
 use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 

@@ -30,10 +30,12 @@ class FrontendUserGroup extends AbstractEntity
      * @var string
      */
     protected string $description = '';
+
     /**
      * @var ObjectStorage<FrontendUserGroup>
      */
     protected $subgroup;
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class FrontendUserGroup extends AbstractEntity
     }
 
     /**
-     * Called again with initialize object, as fetching an entity from the DB does not use the constructor.
+     * @return void
      */
     public function initializeObject(): void
     {

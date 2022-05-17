@@ -76,7 +76,7 @@ class FrontendUser extends AbstractEntity
     /**
      * @var DateTime|null
      */
-    protected ?DateTime $lastlogin;
+    protected ?DateTime $lastlogin = null;
 
     /**
      * @var string
@@ -140,7 +140,7 @@ class FrontendUser extends AbstractEntity
     }
 
     /**
-     * Called again with initialize object, as fetching an entity from the DB does not use the constructor.
+     * @return void
      */
     public function initializeObject(): void
     {
