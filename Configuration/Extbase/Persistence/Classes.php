@@ -1,15 +1,19 @@
 <?php
-/** @noinspection PhpFullyQualifiedNameUsageInspection */
 declare(strict_types=1);
 
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUserGroup;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\Page;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\TtContent;
+
 return [
-    \PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser::class      => [
+    FrontendUser::class      => [
         'tableName' => 'fe_users',
     ],
-    \PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUserGroup::class => [
+    FrontendUserGroup::class => [
         'tableName' => 'fe_groups',
     ],
-    \PSB\PsbFrontendUsers\Domain\Model\Typo3\Page::class              => [
+    Page::class              => [
         'properties' => [
             'cType' => [
                 'fieldName' => 'CType',
@@ -17,7 +21,7 @@ return [
         ],
         'tableName'  => 'pages',
     ],
-    \PSB\PsbFrontendUsers\Domain\Model\Typo3\TtContent::class         => [
+    TtContent::class         => [
         'properties' => [
             'cType' => [
                 'fieldName' => 'CType',
