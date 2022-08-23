@@ -40,7 +40,7 @@
 	"name": "psb/psb-frontend-users",
 	"require": {
 		"php": "^7.4",
-		"psb/psb-foundation": "@dev"
+		"psb/psb-foundation": "^2.0"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
