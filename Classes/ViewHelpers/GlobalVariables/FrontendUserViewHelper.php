@@ -39,7 +39,7 @@ class FrontendUserViewHelper extends AbstractGlobalVariablesViewHelper
         array $arguments,
         Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): mixed {
         return parent::getVariable(FrontendUserProvider::class, $arguments);
     }
 }

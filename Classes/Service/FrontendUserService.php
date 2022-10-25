@@ -34,7 +34,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FrontendUserService
 {
-    use FrontendUserRepositoryTrait, PageRepositoryTrait, TtContentRepositoryTrait;
+    use FrontendUserRepositoryTrait;
+    use PageRepositoryTrait;
+    use TtContentRepositoryTrait;
 
     /**
      * @return FrontendUser|null

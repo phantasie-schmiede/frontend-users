@@ -34,7 +34,7 @@ class FrontendUserGroup extends AbstractEntity
     /**
      * @var ObjectStorage<FrontendUserGroup>
      */
-    protected $subgroup;
+    protected ObjectStorage $subgroup;
 
     /**
      * @var string

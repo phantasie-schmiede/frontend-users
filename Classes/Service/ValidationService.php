@@ -29,6 +29,7 @@ use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -39,7 +40,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ValidationService
 {
-    use FlashMessageServiceTrait, FrontendUserServiceTrait, LocalizationServiceTrait, UriBuilderTrait;
+    use FlashMessageServiceTrait;
+    use FrontendUserServiceTrait;
+    use LocalizationServiceTrait;
+    use UriBuilderTrait;
 
     public const MODES = [
         'REDIRECT'        => 'redirect',
@@ -83,7 +87,7 @@ class ValidationService
         $message = GeneralUtility::makeInstance(FlashMessage::class,
             $this->localizationService->translate($languageFilePath . 'flashMessage.redirect.bodytext'),
             $this->localizationService->translate($languageFilePath . 'flashMessage.redirect.header'),
-            FlashMessage::ERROR,
+            AbstractMessage::ERROR,
             true
         );
         $this->flashMessageService->getMessageQueueByIdentifier('psbFoundation.general')->addMessage($message);
