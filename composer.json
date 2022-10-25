@@ -39,8 +39,8 @@
 	"license": "GPL-2.0-or-later",
 	"name": "psb/psb-frontend-users",
 	"require": {
-		"php": "^7.4",
-		"psb/psb-foundation": "^2.0"
+		"php": "^8.1",
+		"psb/psb-foundation": "@dev"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
