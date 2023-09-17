@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace PSB\PsbFrontendUsers\Domain\Model;
 
-use PSB\PsbFoundation\Annotation\TCA\Column\Select;
+use PSB\PsbFoundation\Attribute\TCA\ColumnType\Select;
 use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -29,10 +29,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 abstract class AbstractFrontendUserRelatedModel extends AbstractEntity
 {
-    /**
-     * @var FrontendUser|null
-     * @Select(linkedModel=FrontendUser::class)
-     */
+    #[Select(linkedModel: FrontendUser::class)]
     protected ?FrontendUser $frontendUser = null;
 
     /**

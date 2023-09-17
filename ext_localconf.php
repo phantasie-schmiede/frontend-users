@@ -1,7 +1,13 @@
 <?php
-/** @noinspection PhpFullyQualifiedNameUsageInspection */
-defined('TYPO3_MODE') or die();
+declare(strict_types=1);
 
-(static function () {
-    \PSB\PsbFoundation\Service\GlobalVariableService::registerGlobalVariableProvider(\PSB\PsbFrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider::class);
+use PSB\PsbFoundation\Service\GlobalVariableService;
+use PSB\PsbFrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
+
+defined('TYPO3') or die();
+
+(static function() {
+    GlobalVariableService::registerGlobalVariableProvider(
+        FrontendUserProvider::class
+    );
 })();

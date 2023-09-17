@@ -7,17 +7,15 @@ $EM_CONF['psb_frontend_users'] = [
     'category'         => 'misc',
     'clearCacheOnLoad' => true,
     'constraints'      => [
-        'conflicts' => [
-        ],
+        'conflicts' => [],
         'depends'   => [
-            'php'            => '7.4',
-            'psb_foundation' => '1.0',
+            'php'            => '8.1',
+            'psb_foundation' => '2.0',
         ],
-        'suggests'  => [
-        ],
+        'suggests'  => [],
     ],
     'description'      => 'a versatile set of tools and objects for dealing with frontend-users',
     'state'            => 'stable',
     'title'            => 'PSbits | Frontend users',
-    'version'          => '1.0.0',
+    'version'          => '2.0.0',
 ];

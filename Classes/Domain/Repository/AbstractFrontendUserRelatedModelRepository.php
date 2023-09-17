@@ -16,11 +16,11 @@ declare(strict_types=1);
 
 namespace PSB\PsbFrontendUsers\Domain\Repository;
 
+use Exception;
+use PSB\PsbFoundation\Service\GlobalVariableService;
 use PSB\PsbFrontendUsers\Domain\Model\AbstractFrontendUserRelatedModel;
 use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser;
-use PSB\PsbFrontendUsers\Traits\PropertyInjection\FrontendUserServiceTrait;
-use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
+use PSB\PsbFrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -36,21 +36,17 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 abstract class AbstractFrontendUserRelatedModelRepository extends Repository
 {
-    use FrontendUserServiceTrait;
-
     /**
-     * @param object $object
+     * @param $object
      *
-     * @throws AspectNotFoundException
-     * @throws AspectPropertyNotFoundException
+     * @return void
+     * @throws Exception
      * @throws IllegalObjectTypeException
      */
     public function add($object): void
     {
-        if ($object instanceof AbstractFrontendUserRelatedModel
-            && null === $object->getFrontendUser()
-        ) {
-            $object->setFrontendUser($this->frontendUserService->getCurrentUser());
+        if ($object instanceof AbstractFrontendUserRelatedModel && null === $object->getFrontendUser()) {
+            $object->setFrontendUser(GlobalVariableService::get(FrontendUserProvider::class . '.user'));
         }
 
         parent::add($object);
@@ -60,13 +56,12 @@ abstract class AbstractFrontendUserRelatedModelRepository extends Repository
      * @param FrontendUser|null $frontendUser
      *
      * @return QueryResultInterface
-     * @throws AspectNotFoundException
-     * @throws AspectPropertyNotFoundException
+     * @throws Exception
      */
     public function findByFrontendUser(FrontendUser $frontendUser = null): QueryResultInterface
     {
         if (null === $frontendUser) {
-            $frontendUser = $this->frontendUserService->getCurrentUser();
+            $frontendUser = GlobalVariableService::get(FrontendUserProvider::class . '.user');
         }
 
         /** @var Query $query */

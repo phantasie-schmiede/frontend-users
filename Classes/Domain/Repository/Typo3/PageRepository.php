@@ -41,6 +41,9 @@ class PageRepository extends Repository
         return $query->execute();
     }
 
+    /**
+     * @return void
+     */
     public function initializeObject(): void
     {
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);

@@ -25,14 +25,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class TtContent extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected string $cType = '';
-
-    /**
-     * @var string
-     */
+    protected string $cType    = '';
     protected string $listType = '';
 
     /**

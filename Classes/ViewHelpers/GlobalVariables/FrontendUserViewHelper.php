@@ -36,9 +36,9 @@ class FrontendUserViewHelper extends AbstractGlobalVariablesViewHelper
      * @return mixed
      */
     public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
+        array                     $arguments,
+        Closure                   $renderChildrenClosure,
+        RenderingContextInterface $renderingContext,
     ): mixed {
         return parent::getVariable(FrontendUserProvider::class, $arguments);
     }

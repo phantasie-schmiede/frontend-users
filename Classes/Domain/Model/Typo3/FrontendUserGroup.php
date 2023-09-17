@@ -26,9 +26,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class FrontendUserGroup extends AbstractEntity
 {
-    /**
-     * @var string
-     */
     protected string $description = '';
 
     /**
@@ -36,14 +33,11 @@ class FrontendUserGroup extends AbstractEntity
      */
     protected ObjectStorage $subgroup;
 
-    /**
-     * @var string
-     */
     protected string $title = '';
 
     public function __construct()
     {
-        $this->subgroup = new ObjectStorage();
+        $this->initializeObject();
     }
 
     /**
@@ -57,37 +51,11 @@ class FrontendUserGroup extends AbstractEntity
     }
 
     /**
-     * @return void
-     */
-    public function initializeObject(): void
-    {
-        $this->subgroup = $this->subgroup ?? new ObjectStorage();
-    }
-
-    /**
-     * Removes a subgroup from the frontend user group
-     *
-     * @param FrontendUserGroup $subgroup
-     */
-    public function removeSubgroup(FrontendUserGroup $subgroup): void
-    {
-        $this->subgroup->detach($subgroup);
-    }
-
-    /**
      * @return string
      */
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
     }
 
     /**
@@ -102,6 +70,40 @@ class FrontendUserGroup extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return void
+     */
+    public function initializeObject(): void
+    {
+        $this->subgroup = new ObjectStorage();
+    }
+
+    /**
+     * Removes a subgroup from the frontend user group
+     *
+     * @param FrontendUserGroup $subgroup
+     */
+    public function removeSubgroup(FrontendUserGroup $subgroup): void
+    {
+        $this->subgroup->detach($subgroup);
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
      * Sets the subgroups. Keep in mind that the property is called "subgroup"
      * although it can hold several subgroups.
      *
@@ -110,14 +112,6 @@ class FrontendUserGroup extends AbstractEntity
     public function setSubgroup(ObjectStorage $subgroup): void
     {
         $this->subgroup = $subgroup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     /**

@@ -17,12 +17,19 @@ declare(strict_types=1);
 namespace PSB\PsbFrontendUsers\Service\GlobalVariableProviders;
 
 use PSB\PsbFoundation\Service\GlobalVariableProviders\AbstractProvider;
-use PSB\PsbFrontendUsers\Traits\PropertyInjection\FrontendUserServiceTrait;
 use PSB\PsbFoundation\Utility\ValidationUtility;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\FrontendUser;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\Page;
+use PSB\PsbFrontendUsers\Domain\Model\Typo3\TtContent;
+use PSB\PsbFrontendUsers\Domain\Repository\Typo3\FrontendUserRepository;
+use PSB\PsbFrontendUsers\Domain\Repository\Typo3\PageRepository;
+use PSB\PsbFrontendUsers\Domain\Repository\Typo3\TtContentRepository;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class FrontendUserProvider
@@ -31,7 +38,17 @@ use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
  */
 class FrontendUserProvider extends AbstractProvider
 {
-    use FrontendUserServiceTrait;
+    /**
+     * @param FrontendUserRepository $frontendUserRepository
+     * @param PageRepository         $pageRepository
+     * @param TtContentRepository    $ttContentRepository
+     */
+    public function __construct(
+        protected readonly FrontendUserRepository $frontendUserRepository,
+        protected readonly PageRepository         $pageRepository,
+        protected readonly TtContentRepository    $ttContentRepository,
+    ) {
+    }
 
     /**
      * @return array
@@ -46,9 +63,57 @@ class FrontendUserProvider extends AbstractProvider
         ValidationUtility::requiresTypoScriptLoaded();
 
         return [
-            'loginPage' => $this->frontendUserService->getLoginPage(),
-            'sysFolder' => $this->frontendUserService->getSysFolder(),
-            'user'      => $this->frontendUserService->getCurrentUser(),
+            'loginPage' => $this->getLoginPage(),
+            'sysFolder' => $this->getSysFolder(),
+            'user'      => $this->getCurrentUser(),
         ];
+    }
+
+    /**
+     * @return FrontendUser|null
+     * @throws AspectNotFoundException
+     * @throws AspectPropertyNotFoundException
+     */
+    private function getCurrentUser(): ?FrontendUser
+    {
+        return $this->frontendUserRepository->findByUid($this->getCurrentUserId());
+    }
+
+    /**
+     * @return int
+     * @throws AspectNotFoundException
+     * @throws AspectPropertyNotFoundException
+     */
+    private function getCurrentUserId(): int
+    {
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        return $context->getAspect('frontend.user')
+            ->get('id');
+    }
+
+    /**
+     * @return Page|null
+     */
+    private function getLoginPage(): ?Page
+    {
+        /** @var TtContent|null $plugin */
+        $plugin = $this->ttContentRepository->findByCType('felogin_login')
+            ->getFirst();
+
+        if (null !== $plugin) {
+            return $this->pageRepository->findByUid($plugin->getPid());
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Page|null
+     */
+    private function getSysFolder(): ?Page
+    {
+        return $this->pageRepository->findByModule('fe_users')
+            ->getFirst();
     }
 }
