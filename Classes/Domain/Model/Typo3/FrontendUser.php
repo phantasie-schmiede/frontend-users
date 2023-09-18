@@ -262,7 +262,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param FrontendUserGroup $usergroup
      */
-    public function removeUsergroup(FrontendUserGroup $usergroup)
+    public function removeUsergroup(FrontendUserGroup $usergroup): void
     {
         $this->usergroup->detach($usergroup);
     }
