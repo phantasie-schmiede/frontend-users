@@ -110,7 +110,7 @@ class ValidationService
      */
     private function addFlashMessage(): void
     {
-        $languageFilePath = FilePathUtility::getLanguageFilePath($this->extensionInformation);
+        $languageFilePath = FilePathUtility::getLanguageFilePathForCurrentFile($this->extensionInformation);
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,
             $this->localizationService->translate($languageFilePath . 'flashMessage.redirect.bodytext'),

@@ -44,9 +44,9 @@ class FrontendUserProvider extends AbstractProvider
      * @param TtContentRepository    $ttContentRepository
      */
     public function __construct(
-        protected readonly FrontendUserRepository $frontendUserRepository,
-        protected readonly PageRepository         $pageRepository,
-        protected readonly TtContentRepository    $ttContentRepository,
+        protected FrontendUserRepository       $frontendUserRepository,
+        protected readonly PageRepository      $pageRepository,
+        protected readonly TtContentRepository $ttContentRepository,
     ) {
     }
 
