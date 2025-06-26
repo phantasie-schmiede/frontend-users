@@ -8,12 +8,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "PSB\\PsbFrontendUsers\\": "Classes/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "PSB\\PsbFrontendUsers\\Tests\\": "Tests/"
+            "PSBits\\FrontendUsers\\": "Classes/"
         }
     },
     "config": {
@@ -24,9 +19,8 @@
     "description": "a versatile set of tools and objects for dealing with frontend-users",
     "extra": {
         "typo3/cms": {
-            "app-dir": ".Build",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "psb_frontend_users",
+            "extension-key": "frontend_users",
             "web-dir": ".Build/public"
         }
     },
@@ -37,15 +31,14 @@
         "typo3"
     ],
     "license": "GPL-3.0-or-later",
-    "name": "psb/psb-frontend-users",
+    "name": "psbits/frontend-users",
     "require": {
-        "php": "^8.1",
-        "psb/psb-foundation": "@dev",
-        "typo3/cms-core": "^12"
+        "php": "^8.3",
+        "psbits/foundation": "^3.0",
+        "typo3/cms-core": "^13.4"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "typo3/testing-framework": "^8.0.9"
+        "roave/security-advisories": "dev-latest"
     },
     "type": "typo3-cms-extension"
 }
