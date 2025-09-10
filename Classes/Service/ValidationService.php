@@ -2,33 +2,25 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of PSBits Frontend Users.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-namespace PSB\PsbFrontendUsers\Service;
+namespace PSBits\FrontendUsers\Service;
 
 use Exception;
 use JsonException;
-use PSB\PsbFoundation\Service\GlobalVariableService;
-use PSB\PsbFoundation\Service\LocalizationService;
-use PSB\PsbFoundation\Utility\Configuration\FilePathUtility;
-use PSB\PsbFoundation\Utility\ValidationUtility;
-use PSB\PsbFrontendUsers\Data\ExtensionInformation;
-use PSB\PsbFrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
+use PSBits\Foundation\Service\GlobalVariableService;
+use PSBits\Foundation\Utility\Configuration\FilePathUtility;
+use PSBits\Foundation\Utility\LocalizationUtility;
+use PSBits\Foundation\Utility\ValidationUtility;
+use PSBits\FrontendUsers\Data\ExtensionInformation;
+use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
@@ -42,38 +34,26 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 /**
  * Class ObjectService
  *
- * @package PSB\PsbFrontendUsers\Service
+ * @package PSBits\FrontendUsers\Service
  */
-class ValidationService
+readonly class ValidationService
 {
-    public const MODES = [
+    public const array MODES = [
         'REDIRECT'        => 'redirect',
         'THROW_EXCEPTION' => 'throwException',
     ];
 
-    /**
-     * @param ExtensionInformation $extensionInformation
-     * @param FlashMessageService  $flashMessageService
-     * @param LocalizationService  $localizationService
-     * @param UriBuilder           $uriBuilder
-     */
     public function __construct(
-        protected readonly ExtensionInformation $extensionInformation,
-        protected readonly FlashMessageService  $flashMessageService,
-        protected readonly LocalizationService  $localizationService,
-        protected readonly UriBuilder           $uriBuilder,
+        protected ExtensionInformation $extensionInformation,
+        protected FlashMessageService  $flashMessageService,
+        protected UriBuilder           $uriBuilder,
     ) {
     }
 
     /**
-     * @param string $mode
-     *
      * @throws AspectNotFoundException
      * @throws ContainerExceptionInterface
      * @throws Exception
-     * @throws ExtensionConfigurationExtensionNotConfiguredException
-     * @throws ExtensionConfigurationPathDoesNotExistException
-     * @throws InvalidConfigurationTypeException
      * @throws JsonException
      * @throws NotFoundExceptionInterface
      * @throws PropagateResponseException
@@ -99,12 +79,8 @@ class ValidationService
     }
 
     /**
-     * @return void
      * @throws AspectNotFoundException
      * @throws ContainerExceptionInterface
-     * @throws ExtensionConfigurationExtensionNotConfiguredException
-     * @throws ExtensionConfigurationPathDoesNotExistException
-     * @throws InvalidConfigurationTypeException
      * @throws JsonException
      * @throws NotFoundExceptionInterface
      */
@@ -113,8 +89,8 @@ class ValidationService
         $languageFilePath = FilePathUtility::getLanguageFilePathForCurrentFile($this->extensionInformation);
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,
-            $this->localizationService->translate($languageFilePath . 'flashMessage.redirect.bodytext'),
-            $this->localizationService->translate($languageFilePath . 'flashMessage.redirect.header'),
+            LocalizationUtility::translate($languageFilePath . 'flashMessage.redirect.bodytext'),
+            LocalizationUtility::translate($languageFilePath . 'flashMessage.redirect.header'),
             ContextualFeedbackSeverity::ERROR,
             true
         );
@@ -123,7 +99,6 @@ class ValidationService
     }
 
     /**
-     * @return string
      * @throws Exception
      */
     private function buildRedirectUri(): string

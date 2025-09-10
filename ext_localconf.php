@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use PSB\PsbFoundation\Service\GlobalVariableService;
-use PSB\PsbFrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
+use PSBits\Foundation\Service\GlobalVariableService;
+use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
 
 defined('TYPO3') or die();
 

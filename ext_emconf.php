@@ -9,8 +9,9 @@ $EM_CONF['psb_frontend_users'] = [
     'constraints'      => [
         'conflicts' => [],
         'depends'   => [
-            'php'            => '8.1',
-            'psb_foundation' => '2.0',
+            'php'            => '8.3',
+            'psb_foundation' => '3.0',
+            'typo3'          => '13.4.0-13.4.99',
         ],
         'suggests'  => [],
     ],
