@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace PSBits\FrontendUsers\Domain\Model\Typo3;
 
 use DateTime;
+use PSBits\Foundation\Attribute\TCA\Mapping\Field;
 use PSBits\Foundation\Attribute\TCA\Mapping\Table;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -37,8 +38,9 @@ class FrontendUser extends AbstractEntity
      */
     protected ObjectStorage $image;
 
+    #[Field(name: 'lastlogin')]
+    protected ?DateTime $lastLogin  = null;
     protected string    $lastName   = '';
-    protected ?DateTime $lastlogin  = null;
     protected string    $middleName = '';
     protected string    $name       = '';
     protected string    $password   = '';
@@ -126,14 +128,14 @@ class FrontendUser extends AbstractEntity
         return $this->image;
     }
 
+    public function getLastLogin(): ?DateTime
+    {
+        return $this->lastLogin;
+    }
+
     public function getLastName(): string
     {
         return $this->lastName;
-    }
-
-    public function getLastlogin(): ?DateTime
-    {
-        return $this->lastlogin;
     }
 
     public function getMiddleName(): string
@@ -259,16 +261,16 @@ class FrontendUser extends AbstractEntity
         return $this;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastLogin(?DateTime $lastLogin): self
     {
-        $this->lastName = $lastName;
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
 
-    public function setLastlogin(?DateTime $lastlogin): self
+    public function setLastName(string $lastName): self
     {
-        $this->lastlogin = $lastlogin;
+        $this->lastName = $lastName;
 
         return $this;
     }
