@@ -34,7 +34,7 @@
     "name": "psbits/frontend-users",
     "require": {
         "php": "^8.3",
-        "psbits/foundation": "^3.0",
+        "psbits/foundation": "@dev",
         "typo3/cms-core": "^13.4"
     },
     "require-dev": {
