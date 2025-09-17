@@ -11,8 +11,13 @@ declare(strict_types=1);
 namespace PSBits\FrontendUsers\Domain\Model\Typo3;
 
 use DateTime;
+use JsonException;
+use PSBits\Foundation\Attribute\TCA\Column;
+use PSBits\Foundation\Attribute\TCA\ColumnType\Text;
 use PSBits\Foundation\Attribute\TCA\Mapping\Field;
 use PSBits\Foundation\Attribute\TCA\Mapping\Table;
+use PSBits\Foundation\Utility\ArrayUtility;
+use PSBits\Foundation\Utility\VariableUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -44,8 +49,13 @@ class FrontendUser extends AbstractEntity
     protected string    $middleName = '';
     protected string    $name       = '';
     protected string    $password   = '';
-    protected string    $telephone  = '';
-    protected string    $title      = '';
+
+    /** @var string $settings DataMapper needs this! */
+    #[Column(exclude: true)]
+    #[Text]
+    protected string $settings  = '';
+    protected string $telephone = '';
+    protected string $title     = '';
 
     /**
      * @var ObjectStorage<FrontendUserGroup>
@@ -151,6 +161,22 @@ class FrontendUser extends AbstractEntity
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function getSetting(string $key): mixed
+    {
+        return VariableUtility::getValueByPath($this->getSettings(), $key, false);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function getSettings(): array
+    {
+        return json_decode($this->settings ?: '[]', true, 512, JSON_THROW_ON_ERROR);
     }
 
     public function getTelephone(): string
@@ -292,6 +318,27 @@ class FrontendUser extends AbstractEntity
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function setSetting(string $key, mixed $value): void
+    {
+        $settings = $this->getSettings();
+        ArrayUtility::setValueByPath($settings, $key, $value);
+
+        $this->setSettings($settings);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function setSettings(array $settings): self
+    {
+        $this->settings = json_encode($settings, JSON_THROW_ON_ERROR);
 
         return $this;
     }
