@@ -37,4 +37,15 @@ class TtContentRepository extends Repository
 
         return $query->execute();
     }
+
+    /**
+     * Always search the whole page tree (ignore storage page).
+     */
+    public function initializeObject(): void
+    {
+        $querySettings = $this->createQuery()
+            ->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
+        $this->setDefaultQuerySettings($querySettings);
+    }
 }
