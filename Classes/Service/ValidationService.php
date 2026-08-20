@@ -12,6 +12,7 @@ namespace PSBits\FrontendUsers\Service;
 
 use Exception;
 use JsonException;
+use PSBits\Foundation\Service\FrontendUrlService;
 use PSBits\Foundation\Service\GlobalVariableService;
 use PSBits\Foundation\Utility\Configuration\FilePathUtility;
 use PSBits\Foundation\Utility\LocalizationUtility;
@@ -20,6 +21,7 @@ use PSBits\FrontendUsers\Data\ExtensionInformation;
 use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 use RuntimeException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
@@ -28,7 +30,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 /**
  * Class ObjectService
@@ -45,7 +46,7 @@ readonly class ValidationService
     public function __construct(
         protected ExtensionInformation $extensionInformation,
         protected FlashMessageService  $flashMessageService,
-        protected UriBuilder           $uriBuilder,
+        protected FrontendUrlService   $frontendUrlService,
     ) {
     }
 
@@ -82,6 +83,7 @@ readonly class ValidationService
      * @throws ContainerExceptionInterface
      * @throws JsonException
      * @throws NotFoundExceptionInterface
+     * @throws ReflectionException
      */
     private function addFlashMessage(): void
     {
@@ -110,8 +112,6 @@ readonly class ValidationService
             $targetPageUid = $loginPage->getUid();
         }
 
-        return $this->uriBuilder->reset()
-            ->setTargetPageUid($targetPageUid)
-            ->buildFrontendUri();
+        return $this->frontendUrlService->buildPageUrl($targetPageUid);
     }
 }
