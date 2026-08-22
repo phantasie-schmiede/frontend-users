@@ -1,0 +1,26 @@
+{
+  "name": "frontend-users",
+  "version": "1.0.0",
+  "description": "a versatile set of tools and objects for dealing with frontend-users",
+  "scripts": {
+    "fix:xml": "prettier --config Build/Quality/prettier.config.mjs --ignore-path Build/Quality/.prettierignore --write \"**/*.{xml,xlf}\"",
+    "lint:xml": "prettier --config Build/Quality/prettier.config.mjs --ignore-path Build/Quality/.prettierignore --check \"**/*.{xml,xlf}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phantasie-schmiede/frontend-users.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phantasie-schmiede/frontend-users/issues"
+  },
+  "homepage": "https://github.com/phantasie-schmiede/frontend-users#readme",
+  "license": "GPL-3.0-or-later",
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@prettier/plugin-xml": "^3.4.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-attributes": "^1.0.0"
+  }
+}

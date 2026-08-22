@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -28,15 +29,14 @@ class FrontendUserGroup extends AbstractEntity
      * @var ObjectStorage<FrontendUserGroup>
      */
     protected ObjectStorage $subgroup;
-
-    protected string $title = '';
+    protected string        $title = '';
 
     public function __construct()
     {
         $this->initializeObject();
     }
 
-    public function addSubgroup(FrontendUserGroup $subgroup): self
+    public function addSubgroup(self $subgroup): self
     {
         $this->subgroup->attach($subgroup);
 

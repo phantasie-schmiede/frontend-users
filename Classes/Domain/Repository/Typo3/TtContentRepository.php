@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -22,6 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class TtContentRepository extends Repository
 {
+    /** @return QueryResultInterface<int, TtContent> */
     public function findByCType(string $cType): QueryResultInterface
     {
         $query = $this->createQuery();
@@ -30,6 +32,7 @@ class TtContentRepository extends Repository
         return $query->execute();
     }
 
+    /** @return QueryResultInterface<int, TtContent> */
     public function findByListType(string $listType): QueryResultInterface
     {
         $query = $this->createQuery();

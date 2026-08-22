@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file datatype="plaintext"
-        date="2021-05-27T00:30:00+01:00"
-        original="messages"
-        product-name="psb_foundation"
-        source-language="en"
-        target-language="de">
+    <file
+		datatype="plaintext"
+		date="2021-05-27T00:30:00+01:00"
+		original="messages"
+		product-name="psb_foundation"
+		source-language="en"
+		target-language="de">
         <body>
             <trans-unit id="flashMessage.redirect.bodytext">
                 <source>You must log in to proceed.</source>

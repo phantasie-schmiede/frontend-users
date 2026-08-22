@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -67,12 +68,15 @@ readonly class ValidationService
             switch ($mode) {
                 case self::MODES['REDIRECT']:
                     $this->addFlashMessage();
+
                     throw new PropagateResponseException(
-                        new RedirectResponse($this->buildRedirectUri(), 401), 1621982088
+                        new RedirectResponse($this->buildRedirectUri(), 401),
+                        1621982088
                     );
                 case self::MODES['THROW_EXCEPTION']:
                     throw new RuntimeException(
-                        __CLASS__ . ': This method requires a logged in frontend user!', 1621981688
+                        __CLASS__ . ': This method requires a logged in frontend user!',
+                        1621981688
                     );
             }
         }
@@ -88,7 +92,7 @@ readonly class ValidationService
     private function addFlashMessage(): void
     {
         $languageFilePath = FilePathUtility::getLanguageFilePathForCurrentFile($this->extensionInformation);
-        $message = GeneralUtility::makeInstance(
+        $message          = GeneralUtility::makeInstance(
             FlashMessage::class,
             LocalizationUtility::translate($languageFilePath . 'flashMessage.redirect.bodytext'),
             LocalizationUtility::translate($languageFilePath . 'flashMessage.redirect.header'),

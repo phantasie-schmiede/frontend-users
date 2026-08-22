@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -24,6 +25,9 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 class FrontendUserViewHelper extends AbstractGlobalVariablesViewHelper
 {
     /**
+     * @param array<string, mixed> $arguments
+     * @param Closure(): mixed $renderChildrenClosure
+     *
      * @throws Exception
      */
     public static function renderStatic(
