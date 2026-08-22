@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -39,6 +40,11 @@ class FrontendUserProvider extends AbstractProvider
     }
 
     /**
+     * @return array{
+     *     loginPage: ?Page,
+     *     sysFolder: ?Page,
+     *     user: ?FrontendUser
+     * }
      * @throws AspectNotFoundException
      * @throws AspectPropertyNotFoundException
      */
@@ -75,7 +81,7 @@ class FrontendUserProvider extends AbstractProvider
     {
         $context = GeneralUtility::makeInstance(Context::class);
 
-        return $context->getAspect('frontend.user')
+        return (int)$context->getAspect('frontend.user')
             ->get('id');
     }
 

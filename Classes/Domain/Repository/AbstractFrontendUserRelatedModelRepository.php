@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -26,33 +27,41 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * This repository lets you find records that are connected to a certain frontend user. Goes hand in hand with a model
  * extending \PSBits\FrontendUsers\Domain\Model\AbstractFrontendUserRelatedModel
  *
+ * @template TModel of AbstractFrontendUserRelatedModel
+ * @extends Repository<TModel>
  * @package PSBits\FrontendUsers\Domain\Repository
  */
 abstract class AbstractFrontendUserRelatedModelRepository extends Repository
 {
     /**
+     * @param TModel $object
+     *
      * @throws Exception
      * @throws IllegalObjectTypeException
      */
     public function add($object): void
     {
-        if ($object instanceof AbstractFrontendUserRelatedModel && null === $object->getFrontendUser()) {
-            $object->setFrontendUser(GlobalVariableService::get(FrontendUserProvider::class . '.user'));
+        if (null === $object->getFrontendUser()) {
+            /** @var FrontendUser|null $frontendUser */
+            $frontendUser = GlobalVariableService::get(FrontendUserProvider::class . '.user');
+            $object->setFrontendUser($frontendUser);
         }
 
         parent::add($object);
     }
 
     /**
+     * @return QueryResultInterface<int, TModel>
      * @throws Exception
      */
     public function findByFrontendUser(?FrontendUser $frontendUser = null): QueryResultInterface
     {
         if (null === $frontendUser) {
+            /** @var FrontendUser|null $frontendUser */
             $frontendUser = GlobalVariableService::get(FrontendUserProvider::class . '.user');
         }
 
-        /** @var Query $query */
+        /** @var Query<TModel> $query */
         $query = $this->createQuery();
         $query->matching($query->equals('frontendUser', $frontendUser));
 

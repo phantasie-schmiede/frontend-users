@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -24,6 +25,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class PageRepository extends Repository
 {
+    /** @return QueryResultInterface<int, Page> */
     public function findByModule(string $module): QueryResultInterface
     {
         $query = $this->createQuery();

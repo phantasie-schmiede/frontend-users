@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -61,7 +62,6 @@ class FrontendUser extends AbstractEntity
      * @var ObjectStorage<FrontendUserGroup>
      */
     protected ObjectStorage $usergroup;
-
     protected string $username = '';
     protected string $www      = '';
     protected string $zip      = '';
@@ -172,6 +172,7 @@ class FrontendUser extends AbstractEntity
     }
 
     /**
+     * @return array<string, mixed>
      * @throws JsonException
      */
     public function getSettings(): array
@@ -217,7 +218,7 @@ class FrontendUser extends AbstractEntity
 
     public function initializeObject(): void
     {
-        $this->image = new ObjectStorage();
+        $this->image     = new ObjectStorage();
         $this->usergroup = new ObjectStorage();
     }
 
@@ -334,6 +335,8 @@ class FrontendUser extends AbstractEntity
     }
 
     /**
+     * @param array<string, mixed> $settings
+     *
      * @throws JsonException
      */
     public function setSettings(array $settings): self
