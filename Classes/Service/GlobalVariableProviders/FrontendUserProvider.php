@@ -13,7 +13,6 @@ namespace PSBits\FrontendUsers\Service\GlobalVariableProviders;
 
 use PSBits\Foundation\Service\GlobalVariableProviders\AbstractProvider;
 use PSBits\Foundation\Utility\ValidationUtility;
-use PSBits\FrontendUsers\Domain\Demand\FrontendUserDemand;
 use PSBits\FrontendUsers\Domain\Model\Typo3\FrontendUser;
 use PSBits\FrontendUsers\Domain\Model\Typo3\Page;
 use PSBits\FrontendUsers\Domain\Model\Typo3\TtContent;
@@ -66,11 +65,7 @@ class FrontendUserProvider extends AbstractProvider
      */
     private function getCurrentUser(): ?FrontendUser
     {
-        $demand = (new FrontendUserDemand())
-            ->setUid($this->getCurrentUserId())
-            ->setLimit(1);
-
-        return $this->frontendUserRepository->findOneByDemand($demand);
+        return $this->frontendUserRepository->findByUid($this->getCurrentUserId());
     }
 
     /**

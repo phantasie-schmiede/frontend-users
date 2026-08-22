@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace PSBits\FrontendUsers\Domain\Repository\Typo3;
 
+use PSBits\Foundation\Utility\QueryUtility;
 use PSBits\FrontendUsers\Domain\Demand\FrontendUserDemand;
 use PSBits\FrontendUsers\Domain\Model\Typo3\FrontendUser;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -25,14 +25,11 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class FrontendUserRepository extends Repository
 {
+    /** @return QueryResultInterface<int, FrontendUser> */
     public function findByDemand(FrontendUserDemand $demand): QueryResultInterface
     {
-        $query = $this->createQuery();
+        $query       = $this->createQuery();
         $constraints = [];
-
-        if (null !== $demand->getUid()) {
-            $constraints[] = $query->equals('uid', $demand->getUid());
-        }
 
         if (null !== $demand->getUsername()) {
             $constraints[] = $query->equals('username', $demand->getUsername());
@@ -42,9 +39,7 @@ class FrontendUserRepository extends Repository
             $constraints[] = $query->equals('email', $demand->getEmail());
         }
 
-        if ([] !== $constraints) {
-            $query->matching(1 === count($constraints) ? $constraints[0] : $query->logicalAnd(...$constraints));
-        }
+        QueryUtility::applyConstraints($constraints, $query);
 
         if (null !== $demand->getLimit()) {
             $query->setLimit($demand->getLimit());

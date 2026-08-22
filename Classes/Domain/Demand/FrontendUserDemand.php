@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -17,16 +18,13 @@ namespace PSBits\FrontendUsers\Domain\Demand;
  */
 class FrontendUserDemand
 {
-    /**
-     * @var array<string, int>
-     */
-    protected array $orderings = [];
+    protected ?string $email  = null;
+    protected ?int    $limit  = null;
+    protected ?int    $offset = null;
 
-    protected ?string $email = null;
-    protected ?int $limit = null;
-    protected ?int $offset = null;
-    protected ?int $uid = null;
-    protected ?string $username = null;
+    /** @var array<string, string> */
+    protected array   $orderings = [];
+    protected ?string $username  = null;
 
     public function getEmail(): ?string
     {
@@ -43,17 +41,10 @@ class FrontendUserDemand
         return $this->offset;
     }
 
-    /**
-     * @return array<string, int>
-     */
+    /** @return array<string, string> */
     public function getOrderings(): array
     {
         return $this->orderings;
-    }
-
-    public function getUid(): ?int
-    {
-        return $this->uid;
     }
 
     public function getUsername(): ?string
@@ -82,19 +73,10 @@ class FrontendUserDemand
         return $this;
     }
 
-    /**
-     * @param array<string, int> $orderings
-     */
+    /** @param array<string, string> $orderings */
     public function setOrderings(array $orderings): self
     {
         $this->orderings = $orderings;
-
-        return $this;
-    }
-
-    public function setUid(?int $uid): self
-    {
-        $this->uid = $uid;
 
         return $this;
     }
