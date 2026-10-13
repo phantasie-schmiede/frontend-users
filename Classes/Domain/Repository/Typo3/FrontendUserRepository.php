@@ -28,8 +28,10 @@ class FrontendUserRepository extends Repository
     /** @return QueryResultInterface<int, FrontendUser> */
     public function findByDemand(FrontendUserDemand $demand): QueryResultInterface
     {
-        $query       = $this->createQuery();
         $constraints = [];
+        $query       = $this->createQuery();
+        $query->getQuerySettings()
+            ->setRespectStoragePage($demand->isRespectStoragePage());
 
         if (null !== $demand->getUsername()) {
             $constraints[] = $query->equals('username', $demand->getUsername());

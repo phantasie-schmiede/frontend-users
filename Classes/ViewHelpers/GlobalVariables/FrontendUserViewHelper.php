@@ -11,11 +11,8 @@ declare(strict_types=1);
 
 namespace PSBits\FrontendUsers\ViewHelpers\GlobalVariables;
 
-use Closure;
-use Exception;
 use PSBits\Foundation\ViewHelpers\GlobalVariables\AbstractGlobalVariablesViewHelper;
 use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * Class FrontendUserViewHelper
@@ -24,17 +21,8 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  */
 class FrontendUserViewHelper extends AbstractGlobalVariablesViewHelper
 {
-    /**
-     * @param array<string, mixed> $arguments
-     * @param Closure(): mixed $renderChildrenClosure
-     *
-     * @throws Exception
-     */
-    public static function renderStatic(
-        array                     $arguments,
-        Closure                   $renderChildrenClosure,
-        RenderingContextInterface $renderingContext,
-    ): mixed {
-        return parent::getVariable(FrontendUserProvider::class, $arguments);
+    protected function getBaseKey(): string
+    {
+        return FrontendUserProvider::class;
     }
 }

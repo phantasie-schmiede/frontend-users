@@ -23,8 +23,9 @@ class FrontendUserDemand
     protected ?int    $offset = null;
 
     /** @var array<string, string> */
-    protected array   $orderings = [];
-    protected ?string $username  = null;
+    protected array   $orderings          = [];
+    protected bool    $respectStoragePage = true;
+    protected ?string $username           = null;
 
     public function getEmail(): ?string
     {
@@ -52,6 +53,11 @@ class FrontendUserDemand
         return $this->username;
     }
 
+    public function isRespectStoragePage(): bool
+    {
+        return $this->respectStoragePage;
+    }
+
     public function setEmail(?string $email): self
     {
         $this->email = $email;
@@ -77,6 +83,13 @@ class FrontendUserDemand
     public function setOrderings(array $orderings): self
     {
         $this->orderings = $orderings;
+
+        return $this;
+    }
+
+    public function setRespectStoragePage(bool $respectStoragePage): self
+    {
+        $this->respectStoragePage = $respectStoragePage;
 
         return $this;
     }
