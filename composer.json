@@ -50,24 +50,26 @@
         "analyze:php": "phpstan analyse --configuration=Build/Quality/phpstan.neon.dist --no-progress",
         "audit:composer": "composer audit --abandoned=report",
         "fix:all": [
-            "@fix:php",
-            "@fix:xml"
+            "@fix:htmlxml",
+            "@fix:php"
         ],
+        "fix:htmlxml": "npm run fix:htmlxml",
         "fix:php": "php-cs-fixer fix --config=Build/Quality/.php-cs-fixer.dist.php --verbose",
         "fix:xml": "npm run fix:xml",
         "lint:all": [
             "@analyze:php",
             "@audit:composer",
+            "@lint:htmlxml",
             "@lint:php",
-            "@lint:xml",
             "@lint:yaml",
             "@validate:composer"
         ],
+        "lint:htmlxml": "npm run lint:htmlxml",
         "lint:php": "php-cs-fixer fix --config=Build/Quality/.php-cs-fixer.dist.php --dry-run --diff --verbose",
-        "lint:xml": "npm run lint:xml",
-        "lint:yaml": "bash -lc 'command -v yamllint >/dev/null 2>&1 || sudo apt install -y yamllint; yamllint -c Build/Quality/.yamllint.yml Build/Quality Configuration'",
+        "lint:yaml": "yamllint -c Build/Quality/.yamllint.yml Configuration",
         "post-install-cmd": [
-            "@qa:setup"
+            "npm install",
+            "cp Build/GitHooks/pre-commit .git/hooks/pre-commit"
         ],
         "post-update-cmd": [
             "@qa:setup"

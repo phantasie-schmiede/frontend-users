@@ -1,8 +1,9 @@
-.Build/
+/.Build/
 /.idea/*
 !/.idea/codeStyles/
 !/.idea/inspectionProfiles/
 /.php-cs-fixer.cache
 /Build/Quality/.phpstan/
 /composer.lock
+/node_modules/
 /package-lock.json
