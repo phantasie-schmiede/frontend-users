@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Page\PageInformation;
 
 /**
  * Class ObjectService
@@ -111,7 +112,9 @@ readonly class ValidationService
         $loginPage = GlobalVariableService::get(FrontendUserProvider::class . '.loginPage');
 
         if (null === $loginPage) {
-            $targetPageUid = $GLOBALS['TSFE']->rootLine[0]['uid'];
+            /** @var PageInformation $pageInformation */
+            $pageInformation = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information');
+            $targetPageUid   = $pageInformation->getRootLine()[0]['uid'];
         } else {
             $targetPageUid = $loginPage->getUid();
         }
