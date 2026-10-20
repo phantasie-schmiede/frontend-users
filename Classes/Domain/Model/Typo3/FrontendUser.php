@@ -62,9 +62,9 @@ class FrontendUser extends AbstractEntity
      * @var ObjectStorage<FrontendUserGroup>
      */
     protected ObjectStorage $usergroup;
-    protected string $username = '';
-    protected string $www      = '';
-    protected string $zip      = '';
+    protected string        $username = '';
+    protected string        $www      = '';
+    protected string        $zip      = '';
 
     public function __construct()
     {
