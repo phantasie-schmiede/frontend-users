@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
     <file
-		datatype="plaintext"
-		date="2025-09-17T08:05:00+01:00"
-		original="messages"
-		product-name="frontend_users"
-		source-language="en"
-		target-language="de">
+        datatype="plaintext"
+        date="2025-09-17T08:05:00+01:00"
+        original="messages"
+        product-name="frontend_users"
+        source-language="en"
+        target-language="de">
         <body>
             <trans-unit id="settings">
                 <source>Settings</source>
