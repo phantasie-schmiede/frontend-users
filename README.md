@@ -16,9 +16,8 @@ composer qa
 ```
 
 `composer qa` fixes everything that can be fixed automatically and afterwards runs all linters and the static
-analysis. The same checks run in the `Quality` GitHub Actions workflow and in the `pre-commit` hook that is
-installed by `composer install`.
+analysis. The same checks run in the `CI` GitHub Actions workflow, which also runs the test matrix on the
+supported core and PHP versions, and in the `pre-commit` hook that is installed by `composer install`.
 
-The workflow also runs a support matrix that checks the supported TYPO3 and PHP combinations still resolve their
-dependencies, and publishes the extension to TER when a semver tag is pushed. Publishing requires the
+The workflow publishes the extension to TER when a release tag is pushed. Publishing requires the
 `TYPO3_API_TOKEN` repository secret.
