@@ -11,18 +11,35 @@ declare(strict_types=1);
 
 namespace PSBits\FrontendUsers\Tests\Unit\Data;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use PSBits\FrontendUsers\Data\ExtensionInformation;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
-final class ExtensionInformationTest extends TestCase
+/**
+ * Class ExtensionInformationTest
+ *
+ * @package PSBits\FrontendUsers\Tests\Unit\Data
+ */
+class ExtensionInformationTest extends UnitTestCase
 {
+    #[Test]
+    public function theInformationIsExtractedFromTheExtensionNamespace(): void
+    {
+        $information = new ExtensionInformation();
+
+        self::assertSame('PSBits', $information->getVendorName());
+        self::assertSame('FrontendUsers', $information->getExtensionName());
+        self::assertSame('frontend_users', $information->getExtensionKey());
+    }
+
+    #[Test]
     public function testRegistersNoModulesAndPlugins(): void
     {
-        $extensionInformation = new ExtensionInformation();
+        $information = new ExtensionInformation();
 
-        self::assertSame([], $extensionInformation->getMainModules());
-        self::assertSame([], $extensionInformation->getModules());
-        self::assertSame([], $extensionInformation->getPlugins());
-        self::assertSame([], $extensionInformation->getPageTypes());
+        self::assertSame([], $information->getMainModules());
+        self::assertSame([], $information->getModules());
+        self::assertSame([], $information->getPageTypes());
+        self::assertSame([], $information->getPlugins());
     }
 }

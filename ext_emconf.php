@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-$EM_CONF['psb_frontend_users'] = [
+$EM_CONF[$_EXTKEY] = [
     'author'           => 'Daniel Ablass',
     'author_email'     => 'dn@phantasie-schmiede.de',
     'category'         => 'misc',
@@ -16,7 +15,7 @@ $EM_CONF['psb_frontend_users'] = [
         'suggests'  => [],
     ],
     'description'      => 'a versatile set of tools and objects for dealing with frontend-users',
-    'state'            => 'stable',
+    'state'            => 'alpha',
     'title'            => 'PSbits | Frontend users',
-    'version'          => '2.0.0',
+    'version'          => '0.1.0',
 ];
