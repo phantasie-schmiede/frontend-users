@@ -16,7 +16,7 @@ $EM_CONF['psb_frontend_users'] = [
         'suggests'  => [],
     ],
     'description'      => 'a versatile set of tools and objects for dealing with frontend-users',
-    'state'            => 'stable',
+    'state'            => 'alpha',
     'title'            => 'PSbits | Frontend users',
-    'version'          => '2.0.0',
+    'version'          => '0.1.0',
 ];
