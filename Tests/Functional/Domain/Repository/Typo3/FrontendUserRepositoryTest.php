@@ -15,9 +15,9 @@ use PHPUnit\Framework\Attributes\Test;
 use PSBits\FrontendUsers\Domain\Demand\FrontendUserDemand;
 use PSBits\FrontendUsers\Domain\Model\Typo3\FrontendUser;
 use PSBits\FrontendUsers\Domain\Repository\Typo3\FrontendUserRepository;
+use PSBits\Qa\Testing\Support\PersistenceSupportTrait;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Exception\NotImplementedException;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -28,20 +28,20 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class FrontendUserRepositoryTest extends FunctionalTestCase
 {
+    use PersistenceSupportTrait;
+
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/psbits/foundation',
         'typo3conf/ext/psbits/frontend-users',
     ];
 
     private FrontendUserRepository $frontendUserRepository;
-    private PersistenceManager     $persistenceManager;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->frontendUserRepository = $this->get(FrontendUserRepository::class);
-        $this->persistenceManager     = $this->get(PersistenceManager::class);
     }
 
     /**
@@ -68,8 +68,7 @@ class FrontendUserRepositoryTest extends FunctionalTestCase
         $this->frontendUserRepository->add($jane);
         $this->frontendUserRepository->add($jack);
 
-        $this->persistenceManager->persistAll();
-        $this->persistenceManager->clearState();
+        $this->persistAll();
     }
 
     /**

@@ -20,11 +20,9 @@ use PSBits\FrontendUsers\Domain\Model\Typo3\FrontendUser;
 use PSBits\FrontendUsers\Domain\Model\Typo3\Page;
 use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
 use PSBits\FrontendUsers\Service\ValidationService;
-use PSBits\FrontendUsers\Tests\Unit\Fixtures\FakeLanguageServiceFactory;
+use PSBits\Qa\Testing\Support\LanguageStackSeeder;
 use ReflectionProperty;
 use RuntimeException;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
@@ -34,12 +32,8 @@ use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
-use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use TYPO3\CMS\Core\Localization\Locale;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 use TYPO3\CMS\Frontend\Page\PageInformation;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -54,6 +48,8 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class ValidationServiceTest extends UnitTestCase
 {
+    use LanguageStackSeeder;
+
     protected bool $resetSingletonInstances = true;
 
     private FlashMessageService $flashMessageService;
@@ -64,33 +60,7 @@ class ValidationServiceTest extends UnitTestCase
     {
         parent::setUp();
 
-        $languageService = $this->createMock(LanguageService::class);
-        $languageService->method('getLocale')
-            ->willReturn(new Locale('en'));
-
-        // v14 translates through LanguageService::translate(), v13 through sL().
-        if (method_exists(LanguageService::class, 'translate')) {
-            $languageService->method('translate')
-                ->willReturn('Please log in.');
-        } else {
-            $languageService->method('sL')
-                ->willReturn('Please log in.');
-        }
-
-        GeneralUtility::setSingletonInstance(
-            LanguageServiceFactory::class,
-            new FakeLanguageServiceFactory($languageService)
-        );
-
-        $cache = $this->createMock(FrontendInterface::class);
-        $cache->method('get')
-            ->willReturn($languageService);
-
-        $cacheManager = $this->createMock(CacheManager::class);
-        $cacheManager->method('getCache')
-            ->willReturn($cache);
-
-        GeneralUtility::setSingletonInstance(CacheManager::class, $cacheManager);
+        $this->seedLanguageStack(static fn (): string => 'Please log in.');
 
         $this->flashMessageService = $this->createMock(FlashMessageService::class);
         $this->frontendUrlService  = $this->createMock(FrontendUrlService::class);

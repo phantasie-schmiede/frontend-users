@@ -16,14 +16,14 @@ use PHPUnit\Framework\Attributes\Test;
 use PSBits\FrontendUsers\Domain\Model\Typo3\FrontendUser;
 use PSBits\FrontendUsers\Domain\Repository\Typo3\FrontendUserRepository;
 use PSBits\FrontendUsers\Service\GlobalVariableProviders\FrontendUserProvider;
-use PSBits\FrontendUsers\Tests\Functional\Fixtures\FunctionalRequestFactory;
+use PSBits\Qa\Testing\Fixtures\FrontendRequestFactory;
+use PSBits\Qa\Testing\Support\PersistenceSupportTrait;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Exception\NotImplementedException;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -37,6 +37,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 #[IgnoreDeprecations]
 class FrontendUserProviderTest extends FunctionalTestCase
 {
+    use PersistenceSupportTrait;
+
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/psbits/foundation',
         'typo3conf/ext/psbits/frontend-users',
@@ -59,11 +61,7 @@ class FrontendUserProviderTest extends FunctionalTestCase
         $user->setUsername('john.doe');
 
         $this->get(FrontendUserRepository::class)->add($user);
-
-        /** @var PersistenceManager $persistenceManager */
-        $persistenceManager = $this->get(PersistenceManager::class);
-        $persistenceManager->persistAll();
-        $persistenceManager->clearState();
+        $this->persistAll();
 
         return $user;
     }
@@ -110,7 +108,7 @@ class FrontendUserProviderTest extends FunctionalTestCase
 
         $user = $this->createFrontendUser();
         $this->simulateLoggedInFrontendUser((int)$user->getUid());
-        $GLOBALS['TYPO3_REQUEST'] = FunctionalRequestFactory::createFrontendRequest();
+        $GLOBALS['TYPO3_REQUEST'] = FrontendRequestFactory::createFrontendRequest('tx_frontendusers');
 
         $variables = $this->get(FrontendUserProvider::class)->getGlobalVariables();
 
@@ -129,7 +127,7 @@ class FrontendUserProviderTest extends FunctionalTestCase
 
         GeneralUtility::makeInstance(Context::class)
             ->setAspect('frontend.user', new UserAspect(null, [0, -1]));
-        $GLOBALS['TYPO3_REQUEST'] = FunctionalRequestFactory::createFrontendRequest();
+        $GLOBALS['TYPO3_REQUEST'] = FrontendRequestFactory::createFrontendRequest('tx_frontendusers');
 
         $variables = $this->get(FrontendUserProvider::class)->getGlobalVariables();
 
