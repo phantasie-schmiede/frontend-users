@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace PSBits\FrontendUsers\Tests\Functional\Domain\Repository\Typo3;
 
 use PHPUnit\Framework\Attributes\Test;
-use PSBits\Foundation\Utility\Typo3VersionUtility;
 use PSBits\FrontendUsers\Domain\Repository\Typo3\TtContentRepository;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -37,18 +36,13 @@ class TtContentRepositoryTest extends FunctionalTestCase
         $this->ttContentRepository = $this->get(TtContentRepository::class);
     }
 
-    private function createTtContent(string $cType, string $listType = ''): int
+    private function createTtContent(string $cType): int
     {
         $connection = $this->getConnectionPool()->getConnectionForTable('tt_content');
         $row        = [
             'pid'   => 0,
             'CType' => $cType,
         ];
-
-        // The list_type column was removed from tt_content in TYPO3 v14.
-        if (!Typo3VersionUtility::isAtLeast('14.0')) {
-            $row['list_type'] = $listType;
-        }
 
         $connection->insert('tt_content', $row);
 
@@ -65,22 +59,6 @@ class TtContentRepositoryTest extends FunctionalTestCase
 
         self::assertCount(1, $content);
         self::assertSame('felogin_login', $content->getFirst()->getCType());
-    }
-
-    #[Test]
-    public function contentWithAMatchingListTypeIsFound(): void
-    {
-        if (Typo3VersionUtility::isAtLeast('14.0')) {
-            self::markTestSkipped('The list_type column was removed from tt_content in TYPO3 v14.');
-        }
-
-        $this->createTtContent('list', 'my_plugin');
-        $this->createTtContent('list', 'other_plugin');
-
-        $content = $this->ttContentRepository->findByListType('my_plugin');
-
-        self::assertCount(1, $content);
-        self::assertSame('my_plugin', $content->getFirst()->getListType());
     }
 
     #[Test]
