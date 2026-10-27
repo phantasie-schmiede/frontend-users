@@ -11,6 +11,11 @@
             "PSBits\\FrontendUsers\\": "Classes/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "PSBits\\FrontendUsers\\Tests\\": "Tests/"
+        }
+    },
     "config": {
         "allow-plugins": {
             "typo3/class-alias-loader": true,
