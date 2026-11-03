@@ -71,6 +71,22 @@ with frontend-users. PHP namespace: `PSBits\FrontendUsers\`.
 - `Resources/Private/Language` — Translations for labels, messages, and errors.
 - `ext_localconf.php` — general configuration like caching.
 
+## Foundation integration
+
+This extension builds on `psbits/foundation`, so it deliberately deviates from the standard TYPO3
+layout. Full conventions: `psbits-foundation` skill (`.opencode/skills/psbits-foundation/SKILL.md`).
+
+- TCA is generated at boot from the `#[Ctrl]`/`#[Column]` attributes in `Classes/Domain/Model/` -
+  there are no `Configuration/TCA/<table>.php` files for own models; do not create them.
+- The database schema is derived from those TCA attributes - there is no `ext_tables.sql`; do not
+  create one.
+- No plugins or modules are registered in `Classes/Data/ExtensionInformation.php` (it is the
+  Foundation package marker); `ext_localconf.php` exists on purpose - it registers the
+  `FrontendUserProvider` with the Foundation `GlobalVariableService` (wiring, not plugin
+  registration).
+- Default TCA labels belong in `Resources/Private/Language/Backend/Configuration/TCA/[modelName].xlf`
+  (keys: `ctrl.title`, `<property>`, `<property>.description`, `palette.*`, `tab.*`).
+
 ## Architecture and conventions
 
 - Strongly typed PHP (`declare(strict_types=1);`) is standard for classes.
@@ -91,7 +107,8 @@ inconsistencies between the codebase and these instructions, mention them - don'
 
 ## Validation
 
-Repository quality checks are defined in `composer.json`, `package.json`, and `.github/workflows/quality.yml`.
+Repository quality checks are defined in `composer.json`, `package.json`, and the shared `CI`
+GitHub Actions workflow (`.github/workflows/ci.yml`).
 Quality configuration files are centralized in `Build/Quality/` and referenced by Composer/NPM scripts and CI.
 
 - Primary local QA command: `composer lint:all` (runs `audit:composer`, `validate:composer`, `lint:php`,

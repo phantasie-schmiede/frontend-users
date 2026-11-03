@@ -17,5 +17,5 @@ $EM_CONF[$_EXTKEY] = [
     'description'      => 'a versatile set of tools and objects for dealing with frontend-users',
     'state'            => 'alpha',
     'title'            => 'PSbits | Frontend users',
-    'version'          => '0.1.0',
+    'version'          => '0.1.1',
 ];

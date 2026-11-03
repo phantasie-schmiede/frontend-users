@@ -24,16 +24,10 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class TtContent extends AbstractEntity
 {
     #[Field(name: 'CType')]
-    protected string $cType    = '';
-    protected string $listType = '';
+    protected string $cType = '';
 
     public function getCType(): string
     {
         return $this->cType;
-    }
-
-    public function getListType(): string
-    {
-        return $this->listType;
     }
 }
